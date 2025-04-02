@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite AI Voice Appointment</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Elite AI Voice Appointment</h1>
+        <p>Book an appointment effortlessly with our AI-powered assistant.</p>
+
+        <button id="startAppointment">Start Voice Booking</button>
+
+        <!-- Status Message (Hidden by Default) -->
+        <div id="statusMessage" class="status-message">Processing your request...</div>
+    </div>
+
+    <script>
+        document.getElementById("startAppointment").addEventListener("click", async () => {
+            const statusMessage = document.getElementById("statusMessage");
+            statusMessage.style.display = "block"; // Show status message
+            statusMessage.textContent = "Processing your request..."; // Update text
+
+            try {
+                const response = await fetch("http://localhost:8080/start-appointment", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                const data = await response.json();
+                statusMessage.textContent = "Voice assistant started. Please wait...";
+            } catch (error) {
+                console.error("Error connecting to the server:", error);
+                statusMessage.textContent = "Error: Unable to connect. Check server.";
+            }
+        });
+    </script>
+</body>
+</html>
